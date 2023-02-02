@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_study_app/models/question_paper_model.dart';
 import 'package:get/get.dart';
 
 class DataUploader extends GetxController {
@@ -19,9 +20,11 @@ class DataUploader extends GetxController {
       .where((path) => 
         path.startsWith("assets/DB/paper")&&path.contains(".json"))
       .toList();
+    List<QuestionPaperModel> questionPapers = [];
     for(var paper in papersInAssets) {
       String stringPaperContent = await rootBundle.loadString(paper);
-      // print(stringPaperContent);
+      questionPapers.add(QuestionPaperModel.fromJson(json.decode(stringPaperContent)));
     }
+    print('Items number ${questionPapers.length}');
   }
 }
